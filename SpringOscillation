@@ -1,0 +1,46 @@
+GlowScript 3.1 VPython
+
+#Task 1: Oscillation
+
+#your name: Thomas Szaktilla
+#your name: Noora Hamodi
+
+#set the background colour
+display(width=600,height=300,center=vector(0,0,0),background=color.purple) #background
+
+Cube=box(pos=vector(12,0,0),size=vector(1, 1, 1),color=color.blue) #Cube characteristics
+
+Floor=box(pos=vector(5,-1,0),size=vector(15,.5, 3),color=color.cyan) #Floor characteristics
+
+Wall=box(pos=vector(-.4,0,0),size=vector(.8, 5, 3),color=color.cyan) #Wall characteristics
+
+Helix = helix(pos=vector(0,0,0), axis= vector(1, 0, 0),radius = 0.4,thickness = 0.1 ,coils = 20,color=color.magenta) #Helix characteristics
+
+#initial variables
+
+mass = 1
+k = 1 
+eq = vector(9,0,0) #equilibrium
+vel = vector(0,0,0) #velocity
+t = 0 #time variable
+dt = 0.001 #change in time variable
+
+#Graph setup
+graph(title='Kinetic and Poetential Energy vs time', xtitle = 't (s)', ytitle = 'K (Js)')
+PEcube_graph = gcurve(color = color.red)
+KEcube_graph = gcurve(color = color.blue)
+
+while t<20:
+  rate(800)
+  acc = (eq - Cube.pos)*(k/mass) #acceleration
+  vel = vel + acc*dt #velocity
+  Cube.pos = Cube.pos + vel*dt + 1/2*(acc)*dt**2 #Cube position
+  Helix.axis = (Cube.pos - Helix.pos) #Helix Position
+  t = t + dt #Change in time
+  PEcube = .5 * k * (eq.x - Cube.pos.x)**2 #Potential Energy
+  KEcube = .5 * 1 * vel.x ** 2 #Kinetic Energy
+
+#Energy vs time graph
+  PEcube_graph.plot(t, PEcube)
+  KEcube_graph.plot(t, KEcube)
+
